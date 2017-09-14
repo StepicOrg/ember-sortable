@@ -714,5 +714,30 @@ export default Mixin.create({
     this.set('isDropping', false);
     this.set('wasDropped', true);
     this._tellGroup('commit');
-  }
+  },
+  
+  actions: {
+    move(delta){
+      let groupDirection = this.get('group.direction');
+      let sortedItems = this.get('group.sortedItems');
+      let thisIndex = sortedItems.indexOf(this);
+
+      if (delta === -1) {
+        if (thisIndex === 0) {
+          return ;
+        }
+        let swapItem = sortedItems[thisIndex + delta];
+        this.set(groupDirection, swapItem.get(groupDirection) + delta);
+      } else {
+        if (thisIndex === (sortedItems.length - 1) ) {
+          return ;
+        }
+        let swapItem = sortedItems[thisIndex + delta];
+        this.set(groupDirection, swapItem.get(groupDirection) + delta);
+      }
+
+      this._tellGroup('update');
+      this._tellGroup('commit');
+    },
+  },
 });
