@@ -654,7 +654,8 @@ export default Mixin.create({
   _drop() {
     if (!this.element || !this.$()) { return; }
 
-    this._preventClick(this.element);
+    let element = this.get('handle') ? this.$(this.get('handle')) : this.$();
+    this._preventClick(element);
 
     this.set('isDragging', false);
     this.set('isDropping', true);
